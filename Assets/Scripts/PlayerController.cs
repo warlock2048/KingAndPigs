@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     //Values
     [SerializeField] private float speed;
     private int direction = 1;
+    [SerializeField] private float jumpForce;
 
     //Param
     private int idSpeed;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        Jump();
     }
 
     private void Move()
@@ -62,5 +65,14 @@ public class PlayerController : MonoBehaviour
             m_transform.localScale = new Vector3(-m_transform.localScale.x, 1, 1);
             direction *= -1;
         }
+    }
+
+    private void Jump()
+    {
+        if (m_gatherInput.IsJumping) 
+        {
+            m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, jumpForce);
+        }
+        m_gatherInput.IsJumping = false;
     }
 }
