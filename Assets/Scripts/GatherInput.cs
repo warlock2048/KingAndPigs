@@ -28,7 +28,7 @@ public class GatherInput : MonoBehaviour
 
     private void StartMove(InputAction.CallbackContext context)
     {
-        _valueX = context.ReadValue<float>();
+        _valueX = NormalizeToInt(context.ReadValue<float>());
     }
 
     private void StopMove(InputAction.CallbackContext context)
@@ -53,5 +53,12 @@ public class GatherInput : MonoBehaviour
         controls.Player.Jump.performed -= StarJump;
         controls.Player.Jump.canceled -= StopJump;
         controls.Player.Disable();
+    }
+
+
+    private int NormalizeToInt(float value)
+    {
+        if (value == 0f) return 0;
+        return (int)Mathf.Sign(value);
     }
 }
